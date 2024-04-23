@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+#define bufsize 10
+int buffer[bufsize], in = 0, out = 0;
+
+void produce() {
+    if ((in + 1) % bufsize == out)
+        printf("\nBuffer is Full");
+    else {
+        printf("\nEnter the value: ");
+        scanf("%d", &buffer[in]);
+        in = (in + 1) % bufsize;
+    }
+}
+
+void consume() {
+    if (in == out)
+        printf("\nBuffer is Empty");
+    else {
+        printf("\nThe consumed value is %d", buffer[out]);
+        out = (out + 1) % bufsize;
+    }
+}
+
+int main() {
+    int choice = 0;
+    while (choice != 3) {
+        printf("\n1. Produce \t 2. Consume \t 3. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                produce();
+                break;
+            case 2:
+                consume();
+                break;
+        }
+    }
+    return 0;
+}
