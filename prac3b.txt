@@ -1,0 +1,29 @@
+  #include <stdio.h>
+
+int main() {
+    FILE *stream;
+    char buffer[256];
+
+    // Open a pipe to execute a command
+    stream = popen("ls -l", "r");
+    if (stream == NULL) {
+        perror("popen");
+        return 1;
+    }
+
+    // Read output from the command
+    while (fgets(buffer, sizeof(buffer), stream) != NULL) {
+        printf("%s", buffer);
+    }
+
+    // Close the pipe and get the termination status of the command
+    int status = pclose(stream);
+    if (status == -1) {
+        perror("pclose");
+        return 1;
+    } else {
+        printf("Command exited with status %d\n", status);
+    }
+
+    return 0;
+}
